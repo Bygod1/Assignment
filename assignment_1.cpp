@@ -20,9 +20,21 @@
 #include <iostream>
 #include <cstring>
 
-/***
- * @brief Reverses a string_view inplace
+/**
+ * @brief Reverses a substring of the given string in-place.
+ *
+ * Performs the reversal directly on the original string without
+ * creating a copy or allocating additional storage.
+ *
+ * Example:
+ *   Input  : "abcdef", start = 1, size = 4
+ *   Output : "aedcbf"
+ *
+ * @param str   Original string whose contents are modified in-place.
+ * @param start Starting index of the substring.
+ * @param size  Length of the substring.
  */
+
 inline void reverse_string(std::string &str, size_t start, size_t size)
 {
     size_t left_itr = start, right_itr = start + size - 1;
@@ -36,9 +48,24 @@ inline void reverse_string(std::string &str, size_t start, size_t size)
     }
 }
 
-/***
+/**
  * @brief reverses the words while maintaining sentence order
+ *
+ * A word is defined as a contiguous sequence of alphanumeric
+ * characters (A-Z, a-z, 0-9). Any non-alphanumeric character
+ * acts as a separator and remains in its original position.
+ *
+ * Examples:
+ *   "Hello World" -> "olleH dlroW"
+ *   "abc 123"     -> "cba 321"
+ *   "Test_String" -> "tseT_gnirtS"
+ *
+ * @param str Input string to process.
+ *
+ * @return String with each word reversed while preserving
+ *         word order and separators.
  */
+
 std::string reverse_words(std::string &str)
 {
 
@@ -62,16 +89,19 @@ std::string reverse_words(std::string &str)
 
         else
         {
+            // Word ends. Reverse the word
             if (start_pos != -1)
                 reverse_string(str, start_pos, sz);
 
+            // Reset the tracking params
             start_pos = -1;
             sz = 0;
         }
 
-        i++; // skip space or any other punctuation
+        i++; // move to the next char
     }
 
+    // Handle the last traversed word
     if (start_pos != -1)
         reverse_string(str, start_pos, sz);
 
